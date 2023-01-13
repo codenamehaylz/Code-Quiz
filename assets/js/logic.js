@@ -24,6 +24,7 @@ var questionsDiv = document.querySelector("#questions");
 var questionTitle = document.querySelector("#question-title");
 var questionChoices = document.querySelector("#choices");
 var currentQIndex;
+//creating buttons for the 'choices' div
 var choice1 = document.createElement("button");
 var choice2 = document.createElement("button");
 var choice3 = document.createElement("button");
@@ -80,6 +81,14 @@ startBtn.addEventListener("click", startGame);
 //Event listener for clicking on question choices
 questionChoices.addEventListener("click", function(event) {
     if (event.target.matches("button")) {
+        var selected = event.target.innerText;
+        console.log(selected);
+        if (selected === questionObj[currentQIndex].correctAnswer) {
+            console.log("Correct!");
+        }
+        else {
+            console.log("Nope!");
+        }
         currentQIndex++;
         generateQuestion(questionObj[currentQIndex]);
     }
