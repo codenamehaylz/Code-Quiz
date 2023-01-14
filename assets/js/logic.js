@@ -4,10 +4,10 @@
 // TODO: Game wrapped up in startGame function
 // Timer start (timer interval function)
 // Question created and appended to page
-// TODO: Event listener for click on choices, if statements to check if correct answer
-//     incorrect = subtract time from clock, text underneath says wrong, incorrect sound
-//     correct = text underneath says correct, correct sound, add to score.
-// TODO: Question replaced with new one, created and appended, repeat.
+// Event listener for click on choices, if statements to check if correct answer
+//     TODO incorrect = subtract time from clock, text underneath says wrong, incorrect sound
+//     TODO correct = text underneath says correct, correct sound, add to score.
+// Question replaced with new one, created and appended, repeat.
 // TODO: Game end if timer = 0 or all Qs answered.
 // TODO: Display score and input for initials - stored this info to local storage
 // TODO: Get info from local storage and display in highscore html
@@ -23,6 +23,7 @@ var startScreen = document.querySelector("#start-screen");
 var questionsDiv = document.querySelector("#questions");
 var questionTitle = document.querySelector("#question-title");
 var questionChoices = document.querySelector("#choices");
+var feedbackDiv = document.querySelector("#feedback");
 var currentQIndex;
 //creating buttons for the 'choices' div
 var choice1 = document.createElement("button");
@@ -40,7 +41,7 @@ var secondsLeft = 60;
 function startTimer() {
     var timerInterval = setInterval(function() {
         secondsLeft--;
-        timeEl.innerHTML = secondsLeft;
+        timeEl.textContent = secondsLeft;
         if (secondsLeft === 0) {
             clearInterval(timerInterval);
             //TODO add end game function
@@ -61,11 +62,26 @@ function toggleHide(element) {
 
 //function for generating new question
 function generateQuestion(question) {
-    questionTitle.innerHTML = question.question;
+    questionTitle.textContent = question.question;
     for (var i = 0; i<4; i++) {
-        choiceList[i].innerHTML = question.choices[i];
+        choiceList[i].textContent = question.choices[i];
     }
 }
+
+
+//function for showing 'wrong' or 'correct' feedback
+function showFeedback(answer) {
+    toggleHide(feedbackDiv);
+    setTimeout(function(){
+        toggleHide(feedbackDiv);
+    }, 1000);
+        if (answer === true){
+            feedbackDiv.textContent = "Correct!"
+        } else {
+            feedbackDiv.textContent = "Wrong!"
+        }
+}
+
 
 //Clicking start button starts the game
 var startGame = function() {
@@ -81,13 +97,16 @@ startBtn.addEventListener("click", startGame);
 //Event listener for clicking on question choices
 questionChoices.addEventListener("click", function(event) {
     if (event.target.matches("button")) {
-        var selected = event.target.innerText;
+        var selected = event.target.textContent;
         console.log(selected);
         if (selected === questionObj[currentQIndex].correctAnswer) {
             console.log("Correct!");
+            showFeedback(true);
         }
         else {
             console.log("Nope!");
+            secondsLeft -= 10;
+            showFeedback(false);
         }
         currentQIndex++;
         generateQuestion(questionObj[currentQIndex]);
