@@ -26,12 +26,10 @@ var questionChoices = document.querySelector("#choices");
 var feedbackDiv = document.querySelector("#feedback");
 var currentQIndex;
 //creating buttons for the 'choices' div
-var choice1 = document.createElement("button");
-var choice2 = document.createElement("button");
-var choice3 = document.createElement("button");
-var choice4 = document.createElement("button");
-var choiceList = [choice1, choice2, choice3, choice4];
+var choiceList = [];
 for (var i = 0; i<4; i++) {
+    var choiceBtn = document.createElement("button");
+    choiceList.push(choiceBtn);
     questionChoices.appendChild(choiceList[i]);
 }
 
@@ -68,7 +66,6 @@ function generateQuestion(question) {
     }
 }
 
-
 //function for showing 'wrong' or 'correct' feedback
 function showFeedback(answer) {
     toggleHide(feedbackDiv);
@@ -81,7 +78,6 @@ function showFeedback(answer) {
             feedbackDiv.textContent = "Wrong!"
         }
 }
-
 
 //Clicking start button starts the game
 var startGame = function() {
