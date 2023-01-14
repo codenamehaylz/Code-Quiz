@@ -25,7 +25,11 @@ var questionTitle = document.querySelector("#question-title");
 var questionChoices = document.querySelector("#choices");
 var feedbackDiv = document.querySelector("#feedback");
 var endScreen = document.querySelector("#end-screen");
+var finalScore = document.querySelector("#final-score");
+var playerInput = document.querySelector("#initials");
+var submitBtn = document.querySelector("#submit");
 var currentQIndex;
+
 //creating buttons for the 'choices' div
 var choiceList = [];
 for (var i = 0; i<4; i++) {
@@ -82,10 +86,11 @@ function showFeedback(answer) {
         }
 }
 
-//TODO function for ending the game
+//function for ending the game
 function endGame() {
     toggleHide(questionsDiv);
     toggleHide(endScreen);
+    finalScore.textContent = secondsLeft;
 }
 
 //Clicking start button starts the game
@@ -116,4 +121,18 @@ questionChoices.addEventListener("click", function(event) {
         currentQIndex++;
         generateQuestion(questionObj[currentQIndex]);
     }
+})
+
+//event listener on end game submit button, saves player score to local storage
+//TODO link player to highscore table upon submit
+
+submitBtn.addEventListener("click", function() {
+    //event.preventDefault();
+    var pastScores = JSON.parse(localStorage.getItem("scores")) || [];
+    var player = {
+        initials: playerInput.value,
+        score: secondsLeft,
+    }
+    pastScores.push(player);
+    localStorage.setItem("scores", JSON.stringify(pastScores));
 })
