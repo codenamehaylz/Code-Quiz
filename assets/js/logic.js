@@ -1,6 +1,3 @@
-//TODO incorrect = subtract time from clock, text underneath says wrong, incorrect sound
-//TODO correct = text underneath says correct, correct sound, add to score.
-
 //Declare variables using HTML elements here
 var startBtn = document.querySelector("#start");
 var timeEl = document.querySelector("#time");
@@ -38,10 +35,16 @@ function startTimer() {
 
 //function to toggle elements to hide or display
 function toggleHide(element) {
-    if (element.classList.contains("start")) {
+    if (element.classList.contains("feedback") && element.classList.contains("hide")) {
+        element.setAttribute("class", "feedback");
+    }
+    else if (element.classList.contains("feedback")) {
+        element.setAttribute("class", "feedback hide");
+    }
+    else if (element.classList.contains("start")) {
     element.setAttribute("class", "hide");
     } 
-    else if (element.classList.contains("hide" || "feedback hide")) {
+    else if (element.classList.contains("hide")) {
         element.setAttribute("class", "start");
     }
 }
@@ -93,10 +96,14 @@ questionChoices.addEventListener("click", function(event) {
         var selected = event.target.textContent;
         if (selected === questionObj[currentQIndex].correctAnswer) {
             showFeedback(true);
+            var correctAudio = new Audio("assets/sfx/correct.wav");
+            correctAudio.play();
         }
         else {
             secondsLeft -= 10;
             showFeedback(false);
+            var incorrectAudio = new Audio("assets/sfx/incorrect.wav");
+            incorrectAudio.play();
         }
         currentQIndex++;
         generateQuestion(questionObj[currentQIndex]);
