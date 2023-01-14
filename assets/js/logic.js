@@ -136,3 +136,5 @@ submitBtn.addEventListener("click", function() {
     pastScores.push(player);
     localStorage.setItem("scores", JSON.stringify(pastScores));
 })
+
+//TODO remove console logs
