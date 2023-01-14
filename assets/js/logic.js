@@ -24,6 +24,7 @@ var questionsDiv = document.querySelector("#questions");
 var questionTitle = document.querySelector("#question-title");
 var questionChoices = document.querySelector("#choices");
 var feedbackDiv = document.querySelector("#feedback");
+var endScreen = document.querySelector("#end-screen");
 var currentQIndex;
 //creating buttons for the 'choices' div
 var choiceList = [];
@@ -40,9 +41,9 @@ function startTimer() {
     var timerInterval = setInterval(function() {
         secondsLeft--;
         timeEl.textContent = secondsLeft;
-        if (secondsLeft === 0) {
+        if (secondsLeft === 0 || currentQIndex === 5) {
             clearInterval(timerInterval);
-            //TODO add end game function
+            endGame();
         }
     }, 1000);
 }
@@ -60,9 +61,11 @@ function toggleHide(element) {
 
 //function for generating new question
 function generateQuestion(question) {
-    questionTitle.textContent = question.question;
-    for (var i = 0; i<4; i++) {
-        choiceList[i].textContent = question.choices[i];
+    if (currentQIndex < 5) {
+        questionTitle.textContent = question.question;
+        for (var i = 0; i<4; i++) {
+            choiceList[i].textContent = question.choices[i];
+        }
     }
 }
 
@@ -77,6 +80,12 @@ function showFeedback(answer) {
         } else {
             feedbackDiv.textContent = "Wrong!"
         }
+}
+
+//TODO function for ending the game
+function endGame() {
+    toggleHide(questionsDiv);
+    toggleHide(endScreen);
 }
 
 //Clicking start button starts the game
