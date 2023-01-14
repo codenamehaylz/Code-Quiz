@@ -108,13 +108,10 @@ startBtn.addEventListener("click", startGame);
 questionChoices.addEventListener("click", function(event) {
     if (event.target.matches("button")) {
         var selected = event.target.textContent;
-        console.log(selected);
         if (selected === questionObj[currentQIndex].correctAnswer) {
-            console.log("Correct!");
             showFeedback(true);
         }
         else {
-            console.log("Nope!");
             secondsLeft -= 10;
             showFeedback(false);
         }
@@ -136,5 +133,3 @@ submitBtn.addEventListener("click", function() {
     pastScores.push(player);
     localStorage.setItem("scores", JSON.stringify(pastScores));
 })
-
-//TODO remove console logs
