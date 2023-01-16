@@ -90,7 +90,7 @@ var startGame = function() {
 
 startBtn.addEventListener("click", startGame);
 
-//Event listener for clicking on question choices
+//Event listener for clicking on question choices, compares selected answer to correct answer
 questionChoices.addEventListener("click", function(event) {
     if (event.target.matches("button")) {
         var selected = event.target.textContent;
